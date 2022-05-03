@@ -8,15 +8,18 @@ const SignupPage: FC = () => {
   const setUser = useStore((state) => state.setUser);
   const { handleSubmit, register } = useForm({
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
   });
 
-  const onSubmit: SubmitHandler<{ email: string; password: string }> = async (
-    values
-  ) => {
-    const res = await publicApi.post("/api/v1/users", values);
+  const onSubmit: SubmitHandler<{
+    email: string;
+    password: string;
+    name: string;
+  }> = async (values) => {
+    const res = await publicApi.post("/api/v1/auth/signup", values);
     localStorage.setItem("matterToken", res.data.result.token);
     setUser(res.data.result.user);
   };
@@ -31,6 +34,19 @@ const SignupPage: FC = () => {
         <div className="py-12">
           <h1 className="text-3xl font-head">Let's get you started</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="py-12 space-y-4">
+            <div className="flex flex-col gap-1">
+              <label htmlFor="name" className="font-medium">
+                Name
+              </label>
+              <input
+                type="text"
+                className="flex-1 bg-gray-200 p-2 rounded border-none outline-none text-lg"
+                placeholder="Your name"
+                {...register("name", {
+                  required: "Name is required",
+                })}
+              />
+            </div>
             <div className="flex flex-col gap-1">
               <label htmlFor="email" className="font-medium">
                 Email address
