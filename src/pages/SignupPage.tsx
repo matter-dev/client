@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Logo from "../components/Logo";
 import { useStore } from "../hooks/store";
 import { publicApi } from "../services/api";
+import imageUrl from "../assets/images/signin.webp";
 
 const SignupPage: FC = () => {
   const setUser = useStore((state) => state.setUser);
@@ -25,8 +26,8 @@ const SignupPage: FC = () => {
   };
 
   return (
-    <main className="md:grid md:grid-cols-[30%_70%]">
-      <section className="py-8 px-12">
+    <main className="md:grid md:grid-cols-2">
+      <section className="py-12 w-1/2 mx-auto">
         <nav>
           <Logo />
         </nav>
@@ -83,6 +84,13 @@ const SignupPage: FC = () => {
           </form>
         </div>
       </section>
+      <img
+        src={imageUrl}
+        alt="people working"
+        height="100vh"
+        width="100%"
+        className="h-screen w-full object-cover"
+      />
     </main>
   );
 };

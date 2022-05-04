@@ -4,6 +4,8 @@ import Logo from "../components/Logo";
 import { useStore } from "../hooks/store";
 import { publicApi } from "../services/api";
 
+import imageUrl from "../assets/images/signin.webp";
+
 const SigninPage: FC = () => {
   const setUser = useStore((state) => state.setUser);
   const { handleSubmit, register } = useForm({
@@ -22,13 +24,13 @@ const SigninPage: FC = () => {
   };
 
   return (
-    <main className="md:grid md:grid-cols-[30%_70%]">
-      <section className="py-8 px-12">
+    <main className="md:grid md:grid-cols-2">
+      <section className="py-12 w-1/2 mx-auto">
         <nav>
           <Logo />
         </nav>
 
-        <div className="py-12">
+        <div className="py-24">
           <h1 className="text-3xl font-head">Welcome back!</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="py-12 space-y-4">
             <div className="flex flex-col gap-1">
@@ -67,6 +69,13 @@ const SigninPage: FC = () => {
           </form>
         </div>
       </section>
+      <img
+        src={imageUrl}
+        alt="people working"
+        height="100vh"
+        width="100%"
+        className="h-screen w-full object-cover"
+      />
     </main>
   );
 };
