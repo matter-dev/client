@@ -3,9 +3,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { privateApi } from "../services/api";
 
-const CreateProjectSider: FC<{ setShowCreateSider: any }> = ({
-  setShowCreateSider,
-}) => {
+const CreateProjectSider: FC<{
+  setShowCreateSider: any;
+  handleAfterClose: any;
+}> = ({ setShowCreateSider, handleAfterClose }) => {
   const { register, handleSubmit } = useForm({
     defaultValues: {
       name: "",
@@ -15,6 +16,7 @@ const CreateProjectSider: FC<{ setShowCreateSider: any }> = ({
   const onSubmit: SubmitHandler<{ name: string }> = async (values) => {
     await privateApi.post("/api/v1/projects", values);
     setShowCreateSider(false);
+    handleAfterClose();
   };
 
   return (
