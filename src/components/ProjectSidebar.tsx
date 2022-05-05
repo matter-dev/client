@@ -29,7 +29,8 @@ const ProjectSidebar: FC = () => {
         </div>
         <ul className="py-8 flex flex-col">
           <NavLink
-            to="/project"
+            to={`/project/${project ? project.id : ""}`}
+            end
             className={({ isActive }) =>
               isActive
                 ? `${baseClasses} font-bold bg-white text-primary`
@@ -39,7 +40,8 @@ const ProjectSidebar: FC = () => {
             Overview
           </NavLink>
           <NavLink
-            to="tasks"
+            end
+            to={`/project/${project ? project.id : ""}/tasks`}
             className={({ isActive }) =>
               isActive
                 ? `${baseClasses} font-bold bg-white text-primary`

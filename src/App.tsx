@@ -17,6 +17,7 @@ import { privateApi } from "./services/api";
 import ProjectPage from "./pages/ProjectPage";
 import ProjectSidebar from "./components/ProjectSidebar";
 import Overview from "./pages/project/Overview";
+import TaskList from "./pages/project/TaskList";
 
 const PublicRoute: FC<{ user: any }> = ({ user }) => {
   const navigate = useNavigate();
@@ -92,7 +93,9 @@ function App() {
         <Route path="/project" element={<ProjectRoute user={user} />}>
           <Route path="" element={<Navigate to="/dashboard/projects" />} />
           <Route path=":projectId" element={<ProjectPage />}>
-            <Route path="" element={<Overview />} />
+            <Route path="" element={<Navigate to="overview" />} />
+            <Route path="overview" element={<Overview />} />
+            <Route path="tasks" element={<TaskList />} />
           </Route>
         </Route>
       </Routes>
