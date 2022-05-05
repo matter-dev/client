@@ -22,7 +22,7 @@ const SignupPage: FC = () => {
   }> = async (values) => {
     const res = await publicApi.post("/api/v1/auth/signup", values);
     localStorage.setItem("matterToken", res.data.result.token);
-    setUser(res.data.result.user);
+    setUser(res.data.result);
   };
 
   return (

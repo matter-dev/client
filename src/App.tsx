@@ -1,13 +1,15 @@
 import { FC, useEffect, useState } from "react";
 import {
   BrowserRouter,
+  Navigate,
   Outlet,
   Route,
   Routes,
   useNavigate,
 } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
 import { useStore } from "./hooks/store";
-import Dashboard from "./pages/Dashboard";
+import ProjectsPage from "./pages/ProjectsPage";
 import IndexPage from "./pages/IndexPage";
 import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
@@ -28,7 +30,12 @@ const PrivateRoute: FC<{ user: any }> = ({ user }) => {
     if (!user) navigate("/");
   }, [user]);
 
-  return <Outlet />;
+  return (
+    <div className="h-screen md:grid md:grid-cols-[20%_80%]">
+      <Sidebar />
+      <Outlet />
+    </div>
+  );
 };
 
 function App() {
@@ -40,9 +47,8 @@ function App() {
     const checkAuthStatus = async () => {
       try {
         const res = await privateApi.get("/api/v1/users/me");
-        console.log(res.data);
         if (res.data.ok) {
-          setUser(res.data.result.user);
+          setUser(res.data.result);
         }
       } catch (err) {
       } finally {
@@ -66,7 +72,8 @@ function App() {
           <Route path="signin" element={<SigninPage />} />
         </Route>
         <Route path="/dashboard" element={<PrivateRoute user={user} />}>
-          <Route path="" element={<Dashboard />} />
+          <Route path="" element={<Navigate to="projects" />} />
+          <Route path="projects" element={<ProjectsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

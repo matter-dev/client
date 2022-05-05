@@ -4,7 +4,8 @@ import Logo from "../components/Logo";
 import Sidebar from "../components/Sidebar";
 import { privateApi } from "../services/api";
 
-const Dashboard: FC = () => {
+const ProjectsPage: FC = () => {
+  const [loading, setLoading] = useState<boolean>(true);
   const [projects, setProjects] = useState<any[]>([]);
   const [showCreateSider, setShowCreateSider] = useState<boolean>(false);
   const [refetch, setRefetch] = useState(true);
@@ -14,8 +15,10 @@ const Dashboard: FC = () => {
       const res = await privateApi.get("/api/v1/projects");
       setProjects(res.data.result.projects);
       setRefetch(false);
+      setLoading(false);
     };
     if (refetch) {
+      setLoading(true);
       getProjects();
     }
   }, [refetch]);
@@ -29,11 +32,7 @@ const Dashboard: FC = () => {
   };
 
   return (
-    <div className="h-screen md:grid md:grid-cols-[20%_80%]">
-      <aside>
-        <Sidebar />
-      </aside>
-
+    <div>
       <div className="px-8">
         <main className="py-8">
           <h1 className="text-4xl font-head">Your projects</h1>
@@ -44,14 +43,25 @@ const Dashboard: FC = () => {
             Create new
           </button>
           <ul className="flex flex-wrap gap-8">
-            {projects.map((project) => (
-              <div
-                className="rounded p-12 text-xl shadow-lg font-medium cursor-pointer hover:scale-110 transition-all"
-                key={project.id}
-              >
-                {project.name}
+            {loading ? (
+              <div>Loading projects...</div>
+            ) : projects.length === 0 ? (
+              <div>
+                No projects present. Press <code>Create New</code> to create
+                one.
               </div>
-            ))}
+            ) : (
+              <>
+                {projects.map((project) => (
+                  <div
+                    className="rounded p-12 text-xl shadow-lg font-medium cursor-pointer hover:scale-110 hover:text-primary transition-all"
+                    key={project.id}
+                  >
+                    {project.name}
+                  </div>
+                ))}
+              </>
+            )}
           </ul>
         </main>
         {showCreateSider && (
@@ -65,4 +75,4 @@ const Dashboard: FC = () => {
   );
 };
 
-export default Dashboard;
+export default ProjectsPage;

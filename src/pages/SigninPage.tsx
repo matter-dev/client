@@ -20,7 +20,7 @@ const SigninPage: FC = () => {
   ) => {
     const res = await publicApi.post("/api/v1/users/signin", values);
     localStorage.setItem("matterToken", res.data.result.token);
-    setUser(res.data.result.user);
+    setUser(res.data.result);
   };
 
   return (
