@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import CreateProjectSider from "../components/CreateProjectSider";
 import Logo from "../components/Logo";
 import Sidebar from "../components/Sidebar";
@@ -53,12 +54,13 @@ const ProjectsPage: FC = () => {
             ) : (
               <>
                 {projects.map((project) => (
-                  <div
+                  <Link
+                    to={`/project/${project.id}`}
                     className="rounded p-12 text-xl shadow-lg font-medium cursor-pointer hover:scale-110 hover:text-primary transition-all"
                     key={project.id}
                   >
                     {project.name}
-                  </div>
+                  </Link>
                 ))}
               </>
             )}

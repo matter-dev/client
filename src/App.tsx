@@ -14,6 +14,9 @@ import IndexPage from "./pages/IndexPage";
 import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
 import { privateApi } from "./services/api";
+import ProjectPage from "./pages/ProjectPage";
+import ProjectSidebar from "./components/ProjectSidebar";
+import Overview from "./pages/project/Overview";
 
 const PublicRoute: FC<{ user: any }> = ({ user }) => {
   const navigate = useNavigate();
@@ -33,6 +36,17 @@ const PrivateRoute: FC<{ user: any }> = ({ user }) => {
   return (
     <div className="h-screen md:grid md:grid-cols-[20%_80%]">
       <Sidebar />
+      <Outlet />
+    </div>
+  );
+};
+
+const ProjectRoute: FC<{ user: any }> = ({ user }) => {
+  if (!user) return <Navigate to="/" />;
+
+  return (
+    <div className="h-screen md:grid md:grid-cols-[20%_80%]">
+      <ProjectSidebar />
       <Outlet />
     </div>
   );
@@ -74,6 +88,12 @@ function App() {
         <Route path="/dashboard" element={<PrivateRoute user={user} />}>
           <Route path="" element={<Navigate to="projects" />} />
           <Route path="projects" element={<ProjectsPage />} />
+        </Route>
+        <Route path="/project" element={<ProjectRoute user={user} />}>
+          <Route path="" element={<Navigate to="/dashboard/projects" />} />
+          <Route path=":projectId" element={<ProjectPage />}>
+            <Route path="" element={<Overview />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
