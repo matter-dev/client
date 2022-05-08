@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .menu-item {
+    @apply text-lg hover:bg-white hover:text-primary py-3 px-8 transition-all cursor-pointer hover:font-bold;
+  }
+}

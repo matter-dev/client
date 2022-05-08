@@ -18,6 +18,7 @@ import ProjectPage from "./pages/ProjectPage";
 import ProjectSidebar from "./components/ProjectSidebar";
 import Overview from "./pages/project/Overview";
 import TaskList from "./pages/project/TaskList";
+import DashboardSidebar from "./components/DashboardSidebar";
 
 const PublicRoute: FC<{ user: any }> = ({ user }) => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const PrivateRoute: FC<{ user: any }> = ({ user }) => {
 
   return (
     <div className="h-screen md:grid md:grid-cols-[20%_80%]">
-      <Sidebar />
+      <DashboardSidebar />
       <Outlet />
     </div>
   );
