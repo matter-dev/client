@@ -1,14 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import CreateProjectSider from "../components/CreateProjectSider";
-import Logo from "../components/Logo";
-import Sidebar from "../components/Sidebar";
+import CreateProjectForm from "../components/CreateProjectForm";
+import RightSidebar from "../components/RightSidebar";
 import { privateApi } from "../services/api";
 
 const ProjectsPage: FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [projects, setProjects] = useState<any[]>([]);
-  const [showCreateSider, setShowCreateSider] = useState<boolean>(false);
+  const [showRightSidebar, setShowRightSidebar] = useState<boolean>(false);
   const [refetch, setRefetch] = useState(true);
 
   useEffect(() => {
@@ -25,7 +24,7 @@ const ProjectsPage: FC = () => {
   }, [refetch]);
 
   const handleCreate = () => {
-    setShowCreateSider(true);
+    setShowRightSidebar(true);
   };
 
   const handleAfterClose = () => {
@@ -66,11 +65,13 @@ const ProjectsPage: FC = () => {
             )}
           </ul>
         </main>
-        {showCreateSider && (
-          <CreateProjectSider
-            setShowCreateSider={setShowCreateSider}
-            handleAfterClose={handleAfterClose}
-          />
+        {showRightSidebar && (
+          <RightSidebar setShowRightSidebar={setShowRightSidebar}>
+            <CreateProjectForm
+              setShowRightSidebar={setShowRightSidebar}
+              handleAfterClose={handleAfterClose}
+            />
+          </RightSidebar>
         )}
       </div>
     </div>

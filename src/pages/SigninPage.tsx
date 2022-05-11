@@ -25,21 +25,21 @@ const SigninPage: FC = () => {
 
   return (
     <main className="md:grid md:grid-cols-2">
-      <section className="py-12 w-1/2 mx-auto">
+      <section className="mx-auto w-1/2 py-12">
         <nav>
           <Logo />
         </nav>
 
         <div className="py-24">
-          <h1 className="text-3xl font-head">Welcome back!</h1>
-          <form onSubmit={handleSubmit(onSubmit)} className="py-12 space-y-4">
+          <h1 className="font-head text-3xl">Welcome back!</h1>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 py-12">
             <div className="flex flex-col gap-1">
               <label htmlFor="email" className="font-medium">
                 Email address
               </label>
               <input
                 type="email"
-                className="flex-1 bg-gray-200 p-2 rounded border-none outline-none text-lg"
+                className="flex-1 rounded border-none bg-gray-200 p-2 text-lg outline-none"
                 placeholder="Your email address"
                 {...register("email", {
                   required: "Email is required",
@@ -53,7 +53,7 @@ const SigninPage: FC = () => {
               </label>
               <input
                 type="password"
-                className="flex-1 bg-gray-200 p-2 rounded border-none outline-none text-lg"
+                className="flex-1 rounded border-none bg-gray-200 p-2 text-lg outline-none"
                 placeholder="A strong password"
                 {...register("password", {
                   required: "Password is required",
@@ -62,7 +62,7 @@ const SigninPage: FC = () => {
             </div>
             <button
               type="submit"
-              className="bg-primary py-3 px-6 text-white font-bold rounded"
+              className="rounded bg-primary py-3 px-6 font-bold text-white"
             >
               Sign in
             </button>

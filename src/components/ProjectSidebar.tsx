@@ -9,13 +9,24 @@ const ProjectSidebar: FC = () => {
   return (
     <>
       <Sidebar>
-        <ul className="py-8 flex flex-col">
+        <ul className="flex flex-col py-8">
+          <NavLink
+            to={`/dashboard/projects`}
+            end
+            className={({ isActive }) =>
+              isActive
+                ? `menu-item bg-white font-bold text-primary`
+                : "menu-item"
+            }
+          >
+            Back to projects
+          </NavLink>
           <NavLink
             to={`/project/${project ? project.id : ""}/overview`}
             end
             className={({ isActive }) =>
               isActive
-                ? `menu-item font-bold bg-white text-primary`
+                ? `menu-item bg-white font-bold text-primary`
                 : "menu-item"
             }
           >
@@ -26,7 +37,7 @@ const ProjectSidebar: FC = () => {
             to={`/project/${project ? project.id : ""}/tasks`}
             className={({ isActive }) =>
               isActive
-                ? `menu-item font-bold bg-white text-primary`
+                ? `menu-item bg-white font-bold text-primary`
                 : "menu-item"
             }
           >
