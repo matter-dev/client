@@ -6,7 +6,7 @@ import { privateApi } from "../services/api";
 interface TaskFormValues {
   title: string;
   description: string;
-  priority: "CRITICAL" | "HIGH" | "NORMAL" | "LOW";
+  priority: string;
 }
 
 const CreateTaskForm: FC<{
