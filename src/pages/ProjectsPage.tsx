@@ -35,9 +35,9 @@ const ProjectsPage: FC = () => {
     <div>
       <div className="px-8">
         <main className="py-8">
-          <h1 className="text-4xl font-head">Your projects</h1>
+          <h1 className="font-head text-4xl">Your projects</h1>
           <button
-            className="my-8 bg-primary text-white py-2 px-4 text-lg rounded"
+            className="my-8 rounded bg-primary py-2 px-4 text-lg text-white"
             onClick={handleCreate}
           >
             Create new
@@ -55,7 +55,7 @@ const ProjectsPage: FC = () => {
                 {projects.map((project) => (
                   <Link
                     to={`/project/${project.id}`}
-                    className="rounded p-12 text-xl shadow-lg font-medium cursor-pointer hover:scale-110 hover:text-primary transition-all"
+                    className="cursor-pointer rounded p-12 text-xl font-medium shadow-lg transition-all hover:scale-110 hover:text-primary"
                     key={project.id}
                   >
                     {project.name}
@@ -66,7 +66,10 @@ const ProjectsPage: FC = () => {
           </ul>
         </main>
         {showRightSidebar && (
-          <RightSidebar setShowRightSidebar={setShowRightSidebar}>
+          <RightSidebar
+            setShowRightSidebar={setShowRightSidebar}
+            showRightSidebar={showRightSidebar}
+          >
             <CreateProjectForm
               setShowRightSidebar={setShowRightSidebar}
               handleAfterClose={handleAfterClose}

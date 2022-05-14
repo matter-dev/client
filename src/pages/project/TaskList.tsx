@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { Children, FC, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import CreateTaskForm from "../../components/CreateTaskForm";
 import RightSidebar from "../../components/RightSidebar";
@@ -11,10 +11,12 @@ const TaskList: FC = () => {
   } = useStore();
 
   const [showRightSidebar, setShowRightSidebar] = useState<boolean>(false);
+  const [newTasks, setNewTasks] = useState<any[]>([]);
 
   const {
     data: tasks,
     isLoading,
+    dataUpdatedAt,
     refetch,
   } = useQuery("tasks", async () => {
     const res = await privateApi.get("/api/v1/tasks", {
@@ -25,6 +27,11 @@ const TaskList: FC = () => {
 
     return res.data.result.tasks;
   });
+
+  useEffect(() => {
+    if (tasks)
+      setNewTasks(() => tasks.filter((task: any) => task.status === "NEW"));
+  }, [dataUpdatedAt]);
 
   if (isLoading) {
     return <div>Loading tasks...</div>;
@@ -44,33 +51,45 @@ const TaskList: FC = () => {
         >
           Create task
         </button>
-        {tasks.length > 0 ? (
-          <table className="table-auto">
-            <thead>
-              <tr className="text-left text-xl text-primary">
-                <th>#ID</th>
-                <th>Title</th>
-                <th>Priority</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody className="grid grid-cols-4 text-lg">
-              {tasks.map((task: any) => (
-                <tr className="bg-purple-50 p-3">
-                  <td>{task.id}</td>
-                  <td>{task.title}</td>
-                  <td>{task.priority}</td>
-                  <td>{task.status}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          "No tasks present. Please create one"
-        )}
+
+        <main className="grid grid-cols-3 gap-8">
+          <section className="space-y-4 bg-gray-50 p-8 shadow">
+            <h3 className="font-head-bold text-xl font-bold">New tasks</h3>
+            {newTasks.length > 0
+              ? newTasks.map((task) => {
+                  let bgColor = "bg-green-400";
+
+                  switch (task.priority) {
+                    case "CRITICAL":
+                      bgColor = "bg-red-400";
+                      break;
+                    case "HIGH":
+                      bgColor = "bg-orange-400";
+                      break;
+                    case "NORMAL":
+                      bgColor = "bg-blue-400";
+                      break;
+                    default:
+                      bgColor = "bg-green-400";
+                      break;
+                  }
+
+                  return (
+                    <div className="bg-gray-100 p-3">
+                      <h4 className="py-2 font-head text-xl">{task.title}</h4>
+                      <div className={`w-4 p-1 ${bgColor}`}></div>
+                    </div>
+                  );
+                })
+              : "No tasks present. Please create one"}
+          </section>
+        </main>
       </div>
       {showRightSidebar && (
-        <RightSidebar setShowRightSidebar={setShowRightSidebar}>
+        <RightSidebar
+          setShowRightSidebar={setShowRightSidebar}
+          showRightSidebar={showRightSidebar}
+        >
           <CreateTaskForm
             setShowRightSidebar={setShowRightSidebar}
             handleAfterClose={refetch}
