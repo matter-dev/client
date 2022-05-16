@@ -1,5 +1,6 @@
 import { Children, FC, useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import CreateTaskForm from "../../components/CreateTaskForm";
 import RightSidebar from "../../components/RightSidebar";
 import { useStore } from "../../hooks/store";
@@ -12,6 +13,8 @@ const TaskList: FC = () => {
 
   const [showRightSidebar, setShowRightSidebar] = useState<boolean>(false);
   const [newTasks, setNewTasks] = useState<any[]>([]);
+
+  const navigate = useNavigate();
 
   const {
     data: tasks,
@@ -75,7 +78,10 @@ const TaskList: FC = () => {
                   }
 
                   return (
-                    <div className="bg-gray-100 p-3">
+                    <div
+                      className="bg-gray-100 p-3"
+                      onClick={() => navigate(`../task/${task.id}`)}
+                    >
                       <h4 className="py-2 font-head text-xl">{task.title}</h4>
                       <div className={`w-4 p-1 ${bgColor}`}></div>
                     </div>

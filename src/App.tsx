@@ -19,6 +19,8 @@ import ProjectSidebar from "./components/ProjectSidebar";
 import Overview from "./pages/project/Overview";
 import TaskList from "./pages/project/TaskList";
 import DashboardSidebar from "./components/DashboardSidebar";
+import TaskHOC from "./components/TaskHOC";
+import Task from "./pages/project/Task";
 
 const PublicRoute: FC<{ user: any }> = ({ user }) => {
   const navigate = useNavigate();
@@ -97,6 +99,9 @@ function App() {
             <Route path="" element={<Navigate to="overview" />} />
             <Route path="overview" element={<Overview />} />
             <Route path="tasks" element={<TaskList />} />
+            <Route path="task" element={<TaskHOC />}>
+              <Route path=":id" element={<Task />} />
+            </Route>
           </Route>
         </Route>
       </Routes>

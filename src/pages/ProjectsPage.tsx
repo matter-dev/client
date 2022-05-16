@@ -1,35 +1,18 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { Link } from "react-router-dom";
 import CreateProjectForm from "../components/CreateProjectForm";
 import RightSidebar from "../components/RightSidebar";
-import { privateApi } from "../services/api";
+import useProjects from "../hooks/useProjects";
 
 const ProjectsPage: FC = () => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [projects, setProjects] = useState<any[]>([]);
-  const [showRightSidebar, setShowRightSidebar] = useState<boolean>(false);
-  const [refetch, setRefetch] = useState(true);
-
-  useEffect(() => {
-    const getProjects = async () => {
-      const res = await privateApi.get("/api/v1/projects");
-      setProjects(res.data.result.projects);
-      setRefetch(false);
-      setLoading(false);
-    };
-    if (refetch) {
-      setLoading(true);
-      getProjects();
-    }
-  }, [refetch]);
-
-  const handleCreate = () => {
-    setShowRightSidebar(true);
-  };
-
-  const handleAfterClose = () => {
-    setRefetch(true);
-  };
+  const {
+    handleAfterClose,
+    handleCreate,
+    loading,
+    projects,
+    showRightSidebar,
+    setShowRightSidebar,
+  } = useProjects();
 
   return (
     <div>
