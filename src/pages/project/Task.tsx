@@ -1,4 +1,6 @@
 import type { FC } from "react";
+import TaskDescription from "../../components/task/TaskDescription";
+import TaskPriority from "../../components/task/TaskPriority";
 import TaskTitle from "../../components/task/TaskTitle";
 import useTask from "../../hooks/useTask";
 
@@ -27,23 +29,18 @@ const Task: FC = () => {
         refetch={refetch}
       />
       <p>Last updated at: {new Date(task.updatedAt).toLocaleString()}</p>
-      <div className="space-y-2">
-        <label htmlFor="priority" className="font-bold">
-          Priority
-        </label>
-        <select
-          onChange={handleSelect}
-          value={priority}
-          name="priority"
-          className="rounded p-2 outline-0"
-        >
-          <option value="LOW">Low</option>
-          <option value="NORMAL">Normal</option>
-          <option value="HIGH">High</option>
-          <option value="CRITICAL">Critical</option>
-        </select>
-      </div>
-      <p className="mt-8">{task.description}</p>
+      <TaskPriority
+        formFields={{ priority: task.priority }}
+        id={task.id}
+        priority={task.priority}
+        refetch={refetch}
+      />
+      <TaskDescription
+        description={task.description}
+        formFields={{ description: task.description }}
+        id={task.id}
+        refetch={refetch}
+      />
     </div>
   );
 };
