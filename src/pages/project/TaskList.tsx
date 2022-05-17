@@ -4,45 +4,23 @@ import { useNavigate } from "react-router-dom";
 import CreateTaskForm from "../../components/CreateTaskForm";
 import RightSidebar from "../../components/RightSidebar";
 import { useStore } from "../../hooks/store";
+import useTasks from "../../hooks/useTasks";
 import { privateApi } from "../../services/api";
 
 const TaskList: FC = () => {
-  const {
-    project: { id: projectId },
-  } = useStore();
-
-  const [showRightSidebar, setShowRightSidebar] = useState<boolean>(false);
-  const [newTasks, setNewTasks] = useState<any[]>([]);
-
   const navigate = useNavigate();
 
   const {
-    data: tasks,
+    handleCreate,
     isLoading,
-    dataUpdatedAt,
+    newTasks,
+    setShowRightSidebar,
+    showRightSidebar,
     refetch,
-  } = useQuery("tasks", async () => {
-    const res = await privateApi.get("/api/v1/tasks", {
-      params: {
-        projectId,
-      },
-    });
-
-    return res.data.result.tasks;
-  });
-
-  useEffect(() => {
-    if (tasks)
-      setNewTasks(() => tasks.filter((task: any) => task.status === "NEW"));
-  }, [dataUpdatedAt]);
-
+  } = useTasks();
   if (isLoading) {
     return <div>Loading tasks...</div>;
   }
-
-  const handleCreate = () => {
-    setShowRightSidebar(true);
-  };
 
   return (
     <>

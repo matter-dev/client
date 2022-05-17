@@ -9,27 +9,12 @@ export default () => {
     data: task,
     isLoading,
     isError,
-    dataUpdatedAt,
     refetch,
   } = useQuery(["fetchTask", taskId], async () => {
     const res = await privateApi.get(`/api/v1/tasks/${taskId}`);
 
     return res.data.result?.task;
   });
-
-  const [priority, setPriority] = useState("LOW");
-
-  useEffect(() => {
-    if (task) {
-      setPriority(task.priority);
-    }
-  }, [dataUpdatedAt]);
-
-  const handleSelect: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setPriority(event.target.value);
-
-    refetch();
-  };
 
   return { isError, isLoading, task, refetch };
 };
