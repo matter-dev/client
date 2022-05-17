@@ -1,5 +1,4 @@
 import type { FC, ReactNode } from "react";
-import { NavLink } from "react-router-dom";
 import { useStore } from "../hooks/store";
 import Logo from "./Logo";
 
@@ -17,15 +16,15 @@ const Sidebar: FC<{ children: ReactNode }> = ({ children }) => {
         <Logo />
       </div>
       <div className="">
-        <div className="text-3xl px-8 flex flex-col">
+        <div className="flex flex-col px-8 text-3xl">
           <span className="text-lg">Welcome,</span>
           {user && user.profile && user.profile.name}
         </div>
         {children}
       </div>
-      <div className="flex items-center justify-center my-8">
+      <div className="my-8 flex items-center justify-center">
         <button
-          className="bg-white text-red-600 py-2 px-6 rounded text-lg font-bold"
+          className="rounded bg-white py-2 px-6 text-lg font-bold text-red-600"
           onClick={handleSignout}
         >
           Sign out

@@ -4,7 +4,7 @@ import { useStore } from "../hooks/store";
 import Sidebar from "./Sidebar";
 
 const ProjectSidebar: FC = () => {
-  const { user, setUser, project } = useStore();
+  const { project } = useStore();
 
   return (
     <>

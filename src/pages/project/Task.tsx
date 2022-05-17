@@ -5,8 +5,7 @@ import TaskTitle from "../../components/task/TaskTitle";
 import useTask from "../../hooks/useTask";
 
 const Task: FC = () => {
-  const { handleSelect, isError, isLoading, priority, task, refetch } =
-    useTask();
+  const { isError, isLoading, task, refetch } = useTask();
 
   if (isError) {
     return (

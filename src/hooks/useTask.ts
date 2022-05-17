@@ -31,5 +31,5 @@ export default () => {
     refetch();
   };
 
-  return { isError, isLoading, handleSelect, task, priority, refetch };
+  return { isError, isLoading, task, refetch };
 };
