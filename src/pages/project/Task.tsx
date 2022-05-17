@@ -1,31 +1,10 @@
-import React, { FC, useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
+import type { FC } from "react";
 import TaskTitle from "../../components/task/TaskTitle";
-import { privateApi } from "../../services/api";
+import useTask from "../../hooks/useTask";
 
 const Task: FC = () => {
-  const { id: taskId } = useParams();
-
-  const {
-    data: task,
-    isLoading,
-    isError,
-    dataUpdatedAt,
-    refetch,
-  } = useQuery("fetchTask", async () => {
-    const res = await privateApi.get(`/api/v1/tasks/${taskId}`);
-
-    return res.data.result?.task;
-  });
-
-  const [priority, setPriority] = useState("LOW");
-
-  useEffect(() => {
-    if (task) {
-      setPriority(task.priority);
-    }
-  }, [dataUpdatedAt]);
+  const { handleSelect, isError, isLoading, priority, task, refetch } =
+    useTask();
 
   if (isError) {
     return (
@@ -38,12 +17,6 @@ const Task: FC = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
-  const handleSelect: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setPriority(event.target.value);
-
-    refetch();
-  };
 
   return (
     <div>

@@ -8,15 +8,14 @@ const ProjectPage: FC = () => {
   const { projectId } = useParams();
   const { setProject } = useStore();
 
-  const {
-    data: project,
-    isLoading,
-    error,
-  } = useQuery("fetchProject", async () => {
-    const res = await privateApi.get(`/api/v1/projects/${projectId}`);
-    setProject(res.data.result.project);
-    return res.data.result.project;
-  });
+  const { isLoading, error } = useQuery(
+    ["fetchProject", projectId],
+    async () => {
+      const res = await privateApi.get(`/api/v1/projects/${projectId}`);
+      setProject(res.data.result.project);
+      return res.data.result.project;
+    }
+  );
 
   if (isLoading) {
     return <div>Loading...</div>;
